@@ -28,18 +28,33 @@ class App extends Component {
   }
 
   dayChange(event) {
+    let value = event.target.value;
+    if (value < 1 || value > 31) {
+        return
+    }
+
     this.setState({day: event.target.value}, function() {
       this.dateChange();
     });
   }
 
   monthChange(event) {
+    let value = event.target.value;
+    if (value < 1 || value > 12) {
+        return
+    }
+
     this.setState({month: event.target.value}, function() {
       this.dateChange();
     });
   }
 
   yearChange(event) {
+    let value = event.target.value;
+    if (value < 1) {
+        return
+    }
+
     this.setState({year: event.target.value}, function() {
       this.dateChange();
     });
@@ -54,11 +69,16 @@ class App extends Component {
         <p className="App-intro">
           Enter a birthday to get the equivalent binary representation.
         </p>
-        <input type="number" placeholder="DD" min="1" max="31" value={this.state.day} onChange={this.dayChange}/>
+        <input type="number" placeholder="DD" value={this.state.day} onChange={this.dayChange}/>
         .
-        <input type="number" placeholder="MM" min="1" max="12" value={this.state.month} onChange={this.monthChange}/>
+        <input type="number" placeholder="MM" value={this.state.month} onChange={this.monthChange}/>
         .
-        <input type="number" placeholder="YYYY" min="0" max="9999" value={this.state.year} onChange={this.yearChange}/>
+        <input type="number" placeholder="YYYY" value={this.state.year} onChange={this.yearChange}/>
+
+        <div>
+          <input type="radio" name="title"/><label>DD.MM.YYYY</label>
+          <input type="radio" name="title"/><label>MM/DD/YYYY</label>
+        </div>
 
         <div>
           <input type="text" value={this.state.binary}/>
