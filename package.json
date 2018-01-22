@@ -2,6 +2,7 @@
   "name": "binary-birthday",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://brennerm.github.io/binary-birthday",
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
