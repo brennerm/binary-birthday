@@ -29,33 +29,45 @@ class App extends Component {
 
   dayChange(event) {
     let value = event.target.value;
-    if (value < 1 || value > 31) {
-        return
+    if (value !== '') {
+        if (value < 1 || value > 31) {
+            return
+        }
     }
 
-    this.setState({day: event.target.value}, function() {
+    this.setState({day: value}, function() {
+      this.dateChange();
+    });
+  }
+
+  formatChange(event) {
+    let value = event.target.value;
+
+    this.setState({format: value}, function() {
       this.dateChange();
     });
   }
 
   monthChange(event) {
     let value = event.target.value;
-    if (value < 1 || value > 12) {
-        return
+    if (value !== '') {
+        if (value < 1 || value > 12) {
+            return
+        }
     }
 
-    this.setState({month: event.target.value}, function() {
+    this.setState({month: value}, function() {
       this.dateChange();
     });
   }
 
   yearChange(event) {
     let value = event.target.value;
-    if (value < 1) {
+    if (value !== '' && value < 1) {
         return
     }
 
-    this.setState({year: event.target.value}, function() {
+    this.setState({year: value}, function() {
       this.dateChange();
     });
   }
