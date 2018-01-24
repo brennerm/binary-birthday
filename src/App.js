@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       binary: '',
+      copied: false,
       day: '',
       month: '',
       year: ''
@@ -79,7 +82,7 @@ class App extends Component {
           <h1 className="App-title">Binary Birthday</h1>
         </header>
         <p className="App-intro">
-          Enter a birthday to get the equivalent binary representation.
+          Enter your birthday
         </p>
         <input type="number" placeholder="DD" value={this.state.day} onChange={this.dayChange}/>
         .
@@ -94,6 +97,12 @@ class App extends Component {
 
         <div>
           <input type="text" value={this.state.binary}/>
+        </div>
+        <CopyToClipboard text={this.state.binary} onCopy={() => this.setState({copied: true})}>
+          <button>Copy to clipboard</button>
+        </CopyToClipboard>
+        <div>
+          {this.state.copied ? <span style={{color: 'red'}}>Copied!</span> : null}
         </div>
       </div>
     );
