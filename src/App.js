@@ -11,14 +11,25 @@ class App extends Component {
       binary: '',
       copied: false,
       day: '',
+      format: 0,
       month: '',
       year: ''
     }
 
+    this.formats = [
+      {label: "DD.MM.YYYY", fn: function(day, month, year) {
+        return day + '.' + month + '.' + year;
+      }},
+      {label: "MM/DD/YYYY", fn: function(day, month, year) {
+        return month + '/' + day + '/' + year;
+      }},
+    ]
+
+    this.dateChange = this.dateChange.bind(this);
+    this.formatChange = this.formatChange.bind(this);
     this.dayChange = this.dayChange.bind(this);
     this.monthChange = this.monthChange.bind(this);
     this.yearChange = this.yearChange.bind(this);
-    this.dateChange = this.dateChange.bind(this);
   }
 
   dateChange(event) {
@@ -26,7 +37,9 @@ class App extends Component {
     let month = (+this.state.month).toString(2)
     let year = (+this.state.year).toString(2)
 
-    let binary = day + '.' + month + '.' + year
+    let format_function = this.formats[this.state.format].fn;
+
+    let binary = format_function(day, month, year)
     this.setState({binary: binary});
   }
 
@@ -44,7 +57,7 @@ class App extends Component {
   }
 
   formatChange(event) {
-    let value = event.target.value;
+    let value = parseInt(event.target.value, 10);
 
     this.setState({format: value}, function() {
       this.dateChange();
@@ -91,8 +104,12 @@ class App extends Component {
         <input type="number" placeholder="YYYY" value={this.state.year} onChange={this.yearChange}/>
 
         <div>
-          <input type="radio" name="title"/><label>DD.MM.YYYY</label>
-          <input type="radio" name="title"/><label>MM/DD/YYYY</label>
+          {this.formats.map(function(format, index){
+            return <div key={index}>
+              <input type="radio" name="format" value={index} onChange={this.formatChange} checked={this.state.format === index}/>
+              <label>{format.label}</label>
+            </div>;
+          }, this)}
         </div>
 
         <div>
